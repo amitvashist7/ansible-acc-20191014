@@ -3,7 +3,12 @@
 - hosts: web
   become: yes
   vars:
-    doc_root: /var/www/html/test01
+    doc_root: /var/www/html/vashist
+    username: "Amit Vashist"
+
+  vars_prompt:
+  - name: "sitename"
+    prompt: What would be the Site Name ?
   
   tasks:
   - name: Install Apache Packages
