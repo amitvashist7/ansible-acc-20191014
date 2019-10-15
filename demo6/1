@@ -1,9 +1,9 @@
 ---
-# Update 7: Introducting Meta & Handlers 
+
 - hosts: web
   become: yes
   vars:
-    doc_root: /Accenture-4/
+    doc_root: /Accenture/
   
   tasks:
   - name: Install Apache Packages
@@ -18,10 +18,6 @@
     template: src=templates/apache2.j2 dest=/etc/apache2/apache2.conf
     notify:
       - Restart Apache
-      - Nothing
-
-  - name: Meta Force to RUN Handlers
-    meta: flush_handlers
 
   - name: Install HTTPD Packages
     yum: name=httpd state=present
@@ -36,17 +32,12 @@
 
   - name: Deploy Index Page
     template: src=templates/index.j2 dest=/var/www/html/index.html
-    notify:
-      - Nothing2
+
 
 
   handlers:
   - name: Restart Apache
     service: name=apache2 state=restarted
-  - name: Nothing
-    command: uname -a
-  - name: Nothing2
-    command: uname -i
 
 
 
