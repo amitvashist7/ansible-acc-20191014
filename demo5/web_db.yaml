@@ -1,0 +1,24 @@
+---
+
+- hosts: web
+  become: yes
+  
+  tasks:
+  - name: Install Apache Packages
+    apt: name=apache2 state=present
+
+  - name: Start Apache Service
+    service: name=apache2 state=started enabled=True
+
+
+
+
+- hosts: db
+  become: yes
+  
+  tasks:
+  - name: Install Mariadb Packages
+    apt: name=mariadb-server state=present
+
+  - name: Start Mariadb Service
+    service: name=mysql state=started enabled=True
