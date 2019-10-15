@@ -1,0 +1,40 @@
+---
+
+- hosts: web
+  become: yes
+  vars:
+    doc_root: /Accenture/
+  
+  tasks:
+  - name: Install Apache Packages
+    apt: name=apache2 state=present
+    when: ansible_os_family == "Debian"
+
+  - name: Start Apache Service
+    service: name=apache2 state=started enabled=True
+    when: ansible_os_family == "Debian"
+
+  - name: Install HTTPD Packages
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: Start HTTPD Service
+    service: name=httpd state=started enabled=True
+    when: ansible_os_family == "RedHat"
+
+  - name: Deploy Site files
+    copy: src=templates/index.html dest=/var/www/html/test.html
+
+  - name: Deploy Index Page
+    template: src=templates/index.j2 dest=/var/www/html/index.html
+
+
+- hosts: db
+  become: yes
+  
+  tasks:
+  - name: Install Mariadb Packages
+    apt: name=mariadb-server state=present
+
+  - name: Start Mariadb Service
+    service: name=mysql state=started enabled=True
