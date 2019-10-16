@@ -1,0 +1,6 @@
+---
+- hosts: 'web:&prod:!python3'
+  become: yes
+  roles:
+  - webserver
+  - dbserver
