@@ -1,0 +1,85 @@
+---
+# Update 7: Introducting Meta & Handlers 
+- hosts: web
+  become: yes
+  vars:
+    doc_root: /var/www/html/vashist-05
+    username: "Amit Vashist"
+
+  vars_prompt:
+  - name: "sitename"
+    prompt: What would be the Site Name ?
+  
+  tasks:
+  - debug: msg="New Site Name is going to be {{sitename}}"
+  
+  - name: Install Apache Packages
+    apt: name=apache2 state=present
+    when: ansible_os_family == "Debian"
+    notify:
+      - Nothing
+
+  - name: Start Apache Service
+    service: name=apache2 state=started enabled=True
+    when: ansible_os_family == "Debian"
+
+  - name: Deploy Custom Apache Configuration
+    template: src=templates/apache2.j2 dest=/etc/apache2/apache2.conf
+    notify:
+      - Restart Apache
+
+  - name: Meta Force to RUN Handlers
+    meta: flush_handlers
+
+
+  - name: Checking the Document Root Avalabilty
+    command: ls {{doc_root}}
+    register: result
+    ignore_errors: yes
+
+  - debug: msg="Unable to find Document Root" 
+    when: result|failed
+
+  - name: Install HTTPD Packages
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: Start HTTPD Service
+    service: name=httpd state=started enabled=True
+    when: ansible_os_family == "RedHat"
+
+  - name: Create Document Root Dir.
+    file: path={{doc_root}} state=directory
+    when: result|failed
+
+  - name: Deploy Site files
+    copy: src=templates/index.html dest={{doc_root}}/test.html
+
+  - name: Deploy Index Page
+    template: src=templates/index.j2 dest={{doc_root}}/index.html
+    notify:
+      - Nothing2
+
+
+  handlers:
+  - name: Restart Apache
+    service: name=apache2 state=restarted
+  - name: Nothing
+    command: uname -a
+  - name: Nothing2
+    command: uname -i
+
+
+
+
+
+
+- hosts: db
+  become: yes
+  
+  tasks:
+  - name: Install Mariadb Packages
+    apt: name=mariadb-server state=present
+
+  - name: Start Mariadb Service
+    service: name=mysql state=started enabled=True
