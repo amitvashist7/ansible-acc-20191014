@@ -4,3 +4,4 @@
   roles:
   - webserver
   - dbserver
+  - server-common
