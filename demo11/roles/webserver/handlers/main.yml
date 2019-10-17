@@ -1,0 +1,8 @@
+---
+# handlers file for webserver
+- name: Restart Apache
+  service: name=apache2 state=restarted
+- name: Nothing
+  command: uname -a
+- name: Nothing2
+  command: uname -i
