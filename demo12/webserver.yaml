@@ -1,0 +1,17 @@
+---
+- hosts: web
+  become: yes
+  serial:
+  - 1
+  - "50%"
+  - "100%"
+
+  pre_tasks:
+  - name: Local Action Task
+    local_action: shell echo "Welcome to Ansible Remote Server" {{inventory_hostname}} >> /tmp/local_action.txt
+  roles:
+  - webserver
+  post_tasks:
+  - name: Remote-Delegate Task
+    shell: echo "Welcome to Ansible Remote Server" {{inventory_hostname}} >> /tmp/local_action.txt
+    delegate_to: 18.218.225.38 

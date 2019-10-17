@@ -1,0 +1,4 @@
+---
+doc_dir: "01"
+username: "{{vault_username}}"
+sitename: "{{vault_sitename}}"
