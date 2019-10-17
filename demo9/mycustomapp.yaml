@@ -5,3 +5,4 @@
   - webserver
   - dbserver
   - server-common
+  - docker
