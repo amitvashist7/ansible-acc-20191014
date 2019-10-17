@@ -6,4 +6,4 @@ mysql_host: 10.0.0.10
 mysql_user: oradb
 
 # sensitive data
-mysql_password: supersecretpassword
+mysql_password: "{{vault_mysql_password}}"
