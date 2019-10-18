@@ -1,0 +1,9 @@
+localhost ansible_ssh_host=localhost ansible_connection=local
+
+
+[webserver]
+localhost ansible_ssh_host=localhost ansible_connection=local
+
+
+[dbserver]
+localhost ansible_ssh_host=localhost ansible_connection=local

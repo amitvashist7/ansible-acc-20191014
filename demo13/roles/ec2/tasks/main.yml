@@ -13,3 +13,4 @@
     assign_public_ip: "{{ ec2.public_ip | default('no') }}"
     private_ip: "{{ ec2.private_ip | default ('')}}"
     wait: true
+    count: "{{ ec2.count }}"
