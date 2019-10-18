@@ -1,0 +1,13 @@
+---
+- hosts: "tag_Name_WebServer_AV"
+  become: yes
+  serial:
+  - 1
+  - "50%"
+  - "100%"
+
+  pre_tasks:
+  - name: Local Action Task
+    local_action: shell echo "Welcome to Ansible Remote Server" {{inventory_hostname}} >> /tmp/local_action.txt
+  roles:
+  - webserver

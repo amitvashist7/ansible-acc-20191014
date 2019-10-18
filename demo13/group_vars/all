@@ -9,7 +9,7 @@ ec2:
   public_ip: yes
   count: 2
   tags:
-    Name: EC2Ansible
+    Name: WebServer-AV
   volumes:
     - device_name: /dev/xvda
       volume_type: standard

@@ -1,0 +1,6 @@
+---
+# vars file for webserver
+doc_root: "/var/www/html/vashist-05"
+username: "Amit Vashist"
+sitename: "Mytestsite"
+doc_dir: "test-dir"
